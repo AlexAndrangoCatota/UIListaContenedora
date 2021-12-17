@@ -3,12 +3,15 @@ package com.example.uilistacontenedora;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.uilistacontenedora.model.adaptadorNoticias;
 import com.example.uilistacontenedora.model.noticias;
 
-public class MainActivity2 extends AppCompatActivity {
+public class MainActivity2 extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     public noticias[] noticias;
     @Override
@@ -25,8 +28,20 @@ public class MainActivity2 extends AppCompatActivity {
 
         adaptadorNoticias adaptadornoticias = new adaptadorNoticias(this, noticias);
         ListView lstOpciones = (ListView)findViewById(R.id.lstListaNoticias);
+
+        View header = getLayoutInflater().inflate(R.layout.ly_headernoticias, null);
+        lstOpciones.addHeaderView(header);
+
         lstOpciones.setAdapter(adaptadornoticias);
 
+        lstOpciones.setOnItemClickListener(this);
+    }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long l) {
+
+        Toast.makeText(this,
+                ((noticias)parent.getItemAtPosition(position)).getTitulo(),
+                Toast.LENGTH_LONG).show();
     }
 }
